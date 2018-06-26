@@ -7,6 +7,7 @@ let data = [];
 let htmlObj = '';
 let randomMines = []
 const contentDom = document.getElementById("mw-canvas-content");
+const contentBlockDom = document.getElementById("mw-canvas-block");
 
 function Cell(rowId, columnId, cellId, mine) {
 	this.rowId = rowId;
@@ -32,7 +33,7 @@ function buildOject() {
 
 	    	const newCell = new Cell(r, c, cellId, mine);
 			newRow.push(newCell);
-			colsHtml += `<span class="mw-col mw-mine-${mine}" row="${r}" col="${c}" id="cell-${cellId}">.</span>`;
+			colsHtml += `<span class="mw-col mw-mine-${mine}" row="${r}" col="${c}" id="cell-${cellId}" onclick="cellClick(${r}, ${c})" oncontextmenu="rightClick(${r}, ${c})">.</span>`;
 			cellId++;
 		}
 		const rowHtml = `<div class="mw-row" row="${r}">${colsHtml}</div>`;
@@ -99,7 +100,6 @@ function reveal(row, col, type) {
 				if (cell.neighbors === 0 && !cell.selected) {
 					cellClick(row2, col2)
 				}
-				//if (obj.neighbors === 0 && !obj.selected) cellClick(row, col);
 			}
 		}
 	}
@@ -110,6 +110,61 @@ function reveal(row, col, type) {
 		cellDom.innerHTML = total;
 		obj.neighbors = total;
 	}
+}
+
+function cellClick(row, col) {
+	const obj = data[row][col];
+	const cellDom = document.getElementById('cell-' + obj.cellId);
+	const state = obj.selected;
+	if (!obj.flagged) {
+		obj.selected = true;
+		selectObj(obj)
+	}
+	
+	if (obj.neighbors === 0 && !state && !obj.mine && !obj.flagged) {
+		reveal(row, col, 'click');
+	}
+
+	if (obj.mine && !obj.flagged) {
+		revealMines(obj);
+		addClass(cellDom, 'selected-over');
+		gameOver();
+	}
+}
+
+function rightClick(row, col) {
+	const obj = data[row][col];
+	const cellDom = document.getElementById('cell-' + obj.cellId);
+	console.log('obj',obj );
+
+	if (obj.flagged) {
+		removeClass(cellDom, 'flagged');
+	} else {
+		addClass(cellDom, 'flagged');
+	}
+
+	obj.flagged = !obj.flagged;
+	return false;
+}
+
+function selectObj(obj) {
+	const cellDom = document.getElementById('cell-' + obj.cellId);
+	addClass(cellDom, 'selected');
+}
+
+function gameOver() {
+	addClass(contentBlockDom, 'active');
+}
+
+function revealMines() {
+	data.forEach(function(row, rowI) {
+    	row.forEach(function(col, colI) {
+    		const obj = data[rowI][colI];
+	    	if (col.mine) {
+	    		selectObj(obj)
+	    	}
+	    });
+    });
 }
 
 assignRandomMines();

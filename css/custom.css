@@ -2,8 +2,10 @@ body {
     font-family: arial;
     margin: 0;
     padding: 0;
+    background-color: #333;
 }
 
+/*Canvas style*/
 .mw-col {
     width: 20px;
     height: 20px;
@@ -13,6 +15,8 @@ body {
     background-color: #c3c3c3;
     cursor: default;
     transition: all .5s ease;
+    color: transparent;
+    background-repeat: no-repeat;
 }
 
     .mw-col.selected {
@@ -20,8 +24,53 @@ body {
     	outline: solid 1px #c3c3c3;
     }
 
+    .mw-col.selected-over {
+        background-color: red;
+    }
+
+    .mw-col:hover {
+        outline: solid 2px #999;
+        position: relative;
+    }
+    .mw-col.mw-neighbors-1 {
+        color: blue;
+    }
+    .mw-col.mw-neighbors-2 {
+        color: green;
+    }
+    .mw-col.mw-neighbors-3,
+    .mw-col.mw-neighbors-4,
+    .mw-col.mw-neighbors-5,
+    .mw-col.mw-neighbors-6,
+    .mw-col.mw-neighbors-7,
+    .mw-col.mw-neighbors-8 {
+        color: red;
+    }
+
+/*Mine style*/
 .mw-mine-true {
     background-image: url(../img/bomb.gif);
     background-size: 139%;
     background-position: center;
 }
+
+/*flagged*/
+.mw-col.flagged {
+    background-image: url(../img/flag.png);
+    color: transparent;
+    background-size: cover;
+}
+
+/*Block game over*/
+.mw-canvas-container {
+    position: relative;
+}
+
+    #mw-canvas-block.active {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
