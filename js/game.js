@@ -96,6 +96,9 @@ function reveal(row, col, type) {
 		if (cell) {
 			if (type == 'neighbors') {
 				if (cell.mine) total++;
+			} else if (type == 'sides') {
+				cell.selected = true;
+				selectObj(cell);
 			} else {
 				if (cell.neighbors === 0 && !cell.selected) {
 					cellClick(row2, col2)
@@ -123,6 +126,7 @@ function cellClick(row, col) {
 	
 	if (obj.neighbors === 0 && !state && !obj.mine && !obj.flagged) {
 		reveal(row, col, 'click');
+		reveal(row, col, 'sides');
 	}
 
 	if (obj.mine && !obj.flagged) {

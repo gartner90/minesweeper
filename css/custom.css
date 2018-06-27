@@ -5,23 +5,43 @@ body {
     background-color: #333;
 }
 
+
+/* Header */
+.mw-logo {
+    width: 230px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+    .mw-main-header {
+        background-color: #232323;
+        position: relative;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-top: solid 5px #f7c600;
+    }
+
 /*Canvas style*/
 .mw-col {
     width: 20px;
     height: 20px;
     display: inline-block;
     text-align: center;
-    outline: solid 2px #ffffff;
-    background-color: #c3c3c3;
+    border: solid 2px #ffffff8c;
+    background-color: #b7b7b7;
     cursor: default;
     transition: all .5s ease;
-    color: transparent;
     background-repeat: no-repeat;
+    margin: 2px;
+    border-radius: 6px;
+    color: transparent;
+    line-height: 21px;
 }
 
     .mw-col.selected {
-    	background-color: #ffffff;
-    	outline: solid 1px #c3c3c3;
+        background-color: #ffffff;
+        border: solid 2px #c3c3c3;
     }
 
     .mw-col.selected-over {
@@ -29,7 +49,7 @@ body {
     }
 
     .mw-col:hover {
-        outline: solid 2px #999;
+        border: solid 2px #999;
         position: relative;
     }
     .mw-col.mw-neighbors-1 {
@@ -45,6 +65,11 @@ body {
     .mw-col.mw-neighbors-7,
     .mw-col.mw-neighbors-8 {
         color: red;
+    }
+
+    .mw-col:not(.selected) {
+        color: transparent;
+        background-image: none;
     }
 
 /*Mine style*/
